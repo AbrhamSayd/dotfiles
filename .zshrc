@@ -2,12 +2,22 @@
 source $(brew --prefix)/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+plugins=(git colored-man-pages colorize pip python brew osx)
+
+#FuzzyFinder
+source <(fzf --zsh)
+
+#ZSH
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME=""
+
 # Aliases for common dirs
 alias home="cd ~"
 
 # System Aliases
 alias ..="cd .."
 alias x="exit"
+alias lzd='lazydocker'
 
 # Git Aliases
 alias add="git add"
@@ -48,6 +58,10 @@ function suyabai () {
   fi
 }
 
+su() {
+  /usr/bin/su -s /usr/bin/zsh $*
+}
+
 # Color Scheme
 export BLACK=0xff181819
 export WHITE=0xffe2e2e3
@@ -74,3 +88,27 @@ export EDITOR="$(which hx)"
 export VISUAL="$(which hx)"
 export MANPAGER="$(which nvim) +Man!"
 export XDG_CONFIG_HOME="$HOME/.config"
+
+# ---- Eza (better ls) -----
+
+alias ls="eza --icons=always"
+
+
+alias py='python3'
+
+# history setup
+HISTFILE=$HOME/.zhistory
+SAVEHIST=1000
+HISTSIZE=999
+setopt share_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_verify
+
+# completion using arrow keys (based on history)
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forwardy
+
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
+
